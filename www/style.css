@@ -4,17 +4,23 @@
 
 /**********************************************************************/
 
-/*  
+  
 
 * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-*/
+
 
 :root {
   --color-fondo: hsl(0, 0%, 59%);
   --color-menu: black;
   --color-letras:white;
+
+  --fuente-primaria: sans-serif;
+  --fuente-secuendaria: serif;
 } 
 
 
@@ -22,9 +28,9 @@
 /**********************************************************************/
 
 body {
-  margin: 0;
   display: grid;
-  grid-template-columns: 15vw 85vw;
+  text-align: center;
+  grid-template-columns: minmax(200px, 25%) 1fr;
   height: 100vh;
 } 
 
@@ -32,35 +38,36 @@ body {
 /**********************************************************************/
 
 .menu {
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   background-color: var(--color-menu);
-  color:var(--color-letras);
+  color: var(--color-letras);
 }
  
 .menu__cabecera {
-  margin-right:1rem;
-  text-align:right;
+  margin-right: 2em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  text-align: right;
 } 
 
  
 .menu__mazos {
   display:flex;
   flex-direction:column;
-  align-items: center;
   background-color: var(--color-fondo);
-  margin-right: 1rem;
-  border-radius: 0.5rem
+  margin-right: 2em;
+  border-radius: 0.5em
 
 } 
 
 .mazo {
-  margin: 0.5em 1rem;
+  margin: 1em;
+  padding: 0.5em;
   background-color: var(--color-menu);
   color: var(--color-letras);
-  border-radius:0.5rem;
-  width: 7rem;
+  border-radius: 0.5em;
 } 
 
 
@@ -78,28 +85,34 @@ body {
 
 /**********************************************************************/
 
-/* 
+
 .panel__visor-tarjetas {
+  padding: 2em;
+  perspective: 1000px;
 } 
-*/
+
 
 /**********************************************************************/
 .tarjeta {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
   border-style:solid;
   background-color:var(--color-letras);
+  position: relative;
 
-  width: 15rem;
-  height: 10rem;
+  transform-style: preserve-3d;
+  transition: all 600ms;
 }
 
-/*
+
 .tarjeta--activa {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 200px;
+  
 } 
-*/
+
 
 .tarjeta--izquierda {
   display:none;
@@ -114,32 +127,54 @@ body {
 
 /* Las clases --anverso y --reverso modelan los lados de la tarjeta */
 
-/*
+
 
 .tarjeta--anverso {
+  position: absolute;
+  backface-visibility: hidden;
+  /* Para ver la cara trasera tras girar*/
+  transform-style: preserve-3d;
+  font-size: xx-large;
+  
 }
 
 .tarjeta--reverso {
+  position: absolute;
+  /* Para que solo se vea la cara de delante*/
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  font-size: xx-large;
+  transform: rotateY(180deg);
+  /* Color para diferenciar delante y detrás*/
+  background-color: aqua;
 } 
-
+/*
 .tarjeta--volteo .tarjeta--anverso {
 }
-
+*/
 .tarjeta--volteo .tarjeta--reverso {
+  transform: rotateY(180deg);
 } 
  
-*/
+
 
 /**********************************************************************/
 
-/* 
+
 .panel__navegacion {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 150px;
+  height: 100px;
+  padding: 1em;
 }
+
 
 .desplazamiento {
   cursor: pointer;
 }
-
+/*
 .referencia {
 }
 */
