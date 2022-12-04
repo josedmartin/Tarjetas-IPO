@@ -246,27 +246,23 @@ function ___muestraTarjetaSiguiente() {
 function ___volteaTarjeta() {
 
   // Cambia el estilo de la tarjeta activa para darle la vuelta
-  //var selector = `[data-index="${numeroDeTarjetaActiva}"]`;
-  //var tarjetaActiva = document.querySelector(selector);
-  //tarjetaActiva.classList.toggle(claseParaVoltearUnaTarjeta);
 
   var selector = `[data-index="${numeroDeTarjetaActiva}"]`;
   var tarjetaActiva = document.querySelector(selector);
-  var lados = tarjetaActiva.children;
+  let lados = tarjetaActiva.children;
+  
+  let anverso = lados[0];
+  let reverso = lados[1];
+  
+  if(!tarjetaActiva.classList.contains(claseParaVoltearUnaTarjeta)){
+    tarjetaActiva.classList.add(claseParaVoltearUnaTarjeta);
+    anverso.style.cssText = "backface-visibility: hidden";
+    reverso.style.cssText = "backface-visibility: visible";
 
-
-  for (var i = 0; i < lados.length; i++) {
-    var lado = lados[i];
-    if(lado.classList.contains("tarjeta--reverso")){
-      lado.classList.remove("tarjeta--reverso")
-      lado.classList.add("token")
-      tarjetaActiva.classList.add("tarjeta--volteo");
-
-    }else if(lado.classList.contains("token")){
-      lado.classList.remove("token")
-      lado.classList.add("tarjeta--reverso")
-      tarjetaActiva.classList.remove("tarjeta--volteo");
-    }
+  }else if(tarjetaActiva.classList.contains(claseParaVoltearUnaTarjeta)){
+    tarjetaActiva.classList.remove(claseParaVoltearUnaTarjeta);
+    anverso.style.cssText = "backface-visibility: visible";
+    reverso.style.cssText = "backface-visibility: hidden";
   }
 }
 
