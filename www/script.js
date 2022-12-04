@@ -57,11 +57,27 @@ import { mazos } from "./data/mazos.js";
 //  Las tarjetas son objetos con dos propiedades anverso y reverso
 //  La variable informa de los mazos disponibles y da las tarjetas que hay en cada mazo
 
+//  -------------------  Variables y constantes
+
+let numeroDeTarjetaActiva = 0;
+let numeroDeTarjetasDelMazo = 0;
+let Nombre = "";
+let actual;
+let siguiente = null;
+let anterior = null;
+
+// Clases CSS para dar estilo a las tarjetas
+const claseTarjetaActiva = "tarjeta tarjeta--activa";
+const claseParaVoltearUnaTarjeta = "tarjeta--volteo";
+const claseTarjetaEnLaDerecha = "tarjeta tarjeta--derecha";
+const claseTarjetaEnLaIzquierda = "tarjeta tarjeta--izquierda";
+
 // -------------  Variables de interacción
 
 // Para cambiar las tarjetas que se mostrarán en el visor
 const panelMazos = document.getElementById("mazos");
 panelMazos.addEventListener("click", (e) => seleccionaMazo(e.target.id));
+panelMazos.addEventListener("click", (e) => Nombre = e.target.id);
 
 // Para avanzar a la siguinte tarjeta en el visor
 const anteriorBtn = document.getElementById("anterior");
@@ -74,17 +90,6 @@ siguienteBtn.addEventListener("click", ___muestraTarjetaSiguiente);
 // Para darle la vuelta a la tarjeta activa
 const visorDeTarjetas = document.getElementById("visorDeTarjetas");
 visorDeTarjetas.addEventListener("click", ___volteaTarjeta);
-
-//  -------------------  Variables y constantes
-
-let numeroDeTarjetaActiva = 0;
-let numeroDeTarjetasDelMazo = 0;
-
-// Clases CSS para dar estilo a las tarjetas
-const claseTarjetaActiva = "tarjeta tarjeta--activa";
-const claseParaVoltearUnaTarjeta = "tarjeta--volteo";
-const claseTarjetaEnLaDerecha = "tarjeta tarjeta--derecha";
-const claseTarjetaEnLaIzquierda = "tarjeta tarjeta--izquierda";
 
 // ---------------------------------------------------------------------------------
 // FUNCIONES
@@ -117,6 +122,23 @@ function comienzo() {
 //  Funciones auxiliares
 // ---------------------------------------------------------------------------------
 
+// Devuelve el array con sus elementos ordenados aleatoriamente
+function baraja(array) {
+  let aux = [];
+  // Se crea un array auxiliar de pares (valor,random) donde:
+  //   -  el primer componente (valor) conserva los valores del array
+  //   -  el segundo componente (random) es un númeo generado aleatoriamente
+  aux = array.map((v) => ({ valor: v, random: Math.random() }));
+
+  // Se ordena el array de pares respecto al par aleatorio random
+  aux = aux.sort((a, b) => a.random - b.random);
+
+  // Se suprime el componente aleatorio del par, manteniendo los valores de partida del array
+  aux = aux.map((par) => par.valor);
+
+  return aux;
+}
+
 function seleccionaMazo(nombre) {
   // Partiendo del mazo seleccionado se actualiza
   //  - las cartas mostradas en el visor
@@ -124,23 +146,6 @@ function seleccionaMazo(nombre) {
   //  - las variables numeroDeTarjetaActiva y numeroDeTarjetasDelMazo
 
   //  Funciones internas
-
-  // Devuelve el array con sus elementos ordenados aleatoriamente
-  function baraja(array) {
-    let aux = [];
-    // Se crea un array auxiliar de pares (valor,random) donde:
-    //   -  el primer componente (valor) conserva los valores del array
-    //   -  el segundo componente (random) es un númeo generado aleatoriamente
-    aux = array.map((v) => ({ valor: v, random: Math.random() }));
-
-    // Se ordena el array de pares respecto al par aleatorio random
-    aux = aux.sort((a, b) => a.random - b.random);
-
-    // Se suprime el componente aleatorio del par, manteniendo los valores de partida del array
-    aux = aux.map((par) => par.valor);
-
-    return aux;
-  }
 
   // Genera el contendio HTML de una tarjeta (con anverso y reverso)
   function generaTarjetaHTML(tarjeta, index) {
@@ -182,6 +187,8 @@ function seleccionaMazo(nombre) {
 
   // Se actualiza el número de tarjeta en la referencia de navegación
   actualizaPanelDeNavegacion();
+
+  Nombre = nombre;
 }
 
 function actualizaPanelDeNavegacion() {
@@ -215,6 +222,20 @@ function ___muestraTarjetaAnterior() {
 
 }
 
+function prueba(){
+  const tarjetas = mazos[Nombre];
+  const tarjetasBarajadas = baraja(tarjetas);
+  var anversoActual = document.getElementsByClassName("tarjeta tarjeta--activa")[0].firstChild.textContent;
+  console.log("ORDEN DE TARJETAS RANDOM")
+  for (let i = 0; i < tarjetasBarajadas.length; i++) {
+    console.log(tarjetasBarajadas[i])
+    if(tarjetasBarajadas[i].anverso == anversoActual) {
+      actual = tarjetasBarajadas[i];
+      siguiente = tarjetasBarajadas[i+1];
+    }
+  }
+}
+
 function ___muestraTarjetaSiguiente() {
   // Solo es posible mover a la izquierda una tarjeta que no
   // sea la última del mazo
@@ -223,23 +244,29 @@ function ___muestraTarjetaSiguiente() {
   //   -  la siguiente a la activa se convierte en visible (activa)
   // También debe actualizarse el panel de navegación y las variable numeroDeTarjetaActiva
 
-  if(numeroDeTarjetaActiva + 1 < numeroDeTarjetasDelMazo){
-    let tarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
+  prueba()
+
+  if(siguiente !=null){
+    // console.log("NO ES NULL")
+    //document.getElementsByClassName("tarjeta tarjeta--activa")[0];
+    let tarjetaActiva = actual;
     numeroDeTarjetaActiva = numeroDeTarjetaActiva + 1;
-    let nuevaTarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
-    tarjetaActiva.classList.remove("tarjeta--activa");
+    let nuevaTarjetaActiva = siguiente;
     tarjetaActiva.classList.add("tarjeta--izquierda");
+    tarjetaActiva.classList.remove("tarjeta--activa");
     nuevaTarjetaActiva.classList.add("tarjeta--activa");
     nuevaTarjetaActiva.classList.remove("tarjeta--derecha");
-    console.log(numeroDeTarjetaActiva)
   }
   actualizaPanelDeNavegacion()
 
 }
 
 function ___volteaTarjeta() {
+
+  prueba()
+
   // Cambia el estilo de la tarjeta activa para darle la vuelta
-  let tarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
+  let tarjetaActiva = actual
   var lados = tarjetaActiva.children;
   for (var i = 0; i < lados.length; i++) {
     var lado = lados[i];
