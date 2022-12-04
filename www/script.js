@@ -209,32 +209,18 @@ function ___muestraTarjetaAnterior() {
   // También debe actualizarse el panel de navegación y las variable numeroDeTarjetaActiva
 
   if(numeroDeTarjetaActiva >= 1){
-    let tarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
+    var selector = `[data-index="${numeroDeTarjetaActiva}"]`;
+    var tarjetaActiva = document.querySelector(selector);
+    tarjetaActiva.classList = claseTarjetaEnLaDerecha;
     numeroDeTarjetaActiva = numeroDeTarjetaActiva - 1;
-    let nuevaTarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
-    tarjetaActiva.classList.remove("tarjeta--activa");
-    tarjetaActiva.classList.add("tarjeta--derecha");
-    nuevaTarjetaActiva.classList.add("tarjeta--activa");
-    nuevaTarjetaActiva.classList.remove("tarjeta--izquierda");
-    console.log(numeroDeTarjetaActiva)
+    selector = `[data-index="${numeroDeTarjetaActiva}"]`;
+    tarjetaActiva = document.querySelector(selector);
+    tarjetaActiva.classList = claseTarjetaActiva;
   }
   actualizaPanelDeNavegacion()
 
 }
 
-function prueba(){
-  const tarjetas = mazos[Nombre];
-  const tarjetasBarajadas = baraja(tarjetas);
-  var anversoActual = document.getElementsByClassName("tarjeta tarjeta--activa")[0].firstChild.textContent;
-  console.log("ORDEN DE TARJETAS RANDOM")
-  for (let i = 0; i < tarjetasBarajadas.length; i++) {
-    console.log(tarjetasBarajadas[i])
-    if(tarjetasBarajadas[i].anverso == anversoActual) {
-      actual = tarjetasBarajadas[i];
-      siguiente = tarjetasBarajadas[i+1];
-    }
-  }
-}
 
 function ___muestraTarjetaSiguiente() {
   // Solo es posible mover a la izquierda una tarjeta que no
@@ -244,18 +230,14 @@ function ___muestraTarjetaSiguiente() {
   //   -  la siguiente a la activa se convierte en visible (activa)
   // También debe actualizarse el panel de navegación y las variable numeroDeTarjetaActiva
 
-  prueba()
-
-  if(siguiente !=null){
-    // console.log("NO ES NULL")
-    //document.getElementsByClassName("tarjeta tarjeta--activa")[0];
-    let tarjetaActiva = actual;
+  if(numeroDeTarjetaActiva + 1 !== numeroDeTarjetasDelMazo){
+    var selector = `[data-index="${numeroDeTarjetaActiva}"]`;
+    var tarjetaActiva = document.querySelector(selector);
+    tarjetaActiva.classList = claseTarjetaEnLaIzquierda;
     numeroDeTarjetaActiva = numeroDeTarjetaActiva + 1;
-    let nuevaTarjetaActiva = siguiente;
-    tarjetaActiva.classList.add("tarjeta--izquierda");
-    tarjetaActiva.classList.remove("tarjeta--activa");
-    nuevaTarjetaActiva.classList.add("tarjeta--activa");
-    nuevaTarjetaActiva.classList.remove("tarjeta--derecha");
+    selector = `[data-index="${numeroDeTarjetaActiva}"]`;
+    tarjetaActiva = document.querySelector(selector);
+    tarjetaActiva.classList = claseTarjetaActiva;
   }
   actualizaPanelDeNavegacion()
 
@@ -263,11 +245,16 @@ function ___muestraTarjetaSiguiente() {
 
 function ___volteaTarjeta() {
 
-  prueba()
-
   // Cambia el estilo de la tarjeta activa para darle la vuelta
-  let tarjetaActiva = actual
+  //var selector = `[data-index="${numeroDeTarjetaActiva}"]`;
+  //var tarjetaActiva = document.querySelector(selector);
+  //tarjetaActiva.classList.toggle(claseParaVoltearUnaTarjeta);
+
+  var selector = `[data-index="${numeroDeTarjetaActiva}"]`;
+  var tarjetaActiva = document.querySelector(selector);
   var lados = tarjetaActiva.children;
+
+
   for (var i = 0; i < lados.length; i++) {
     var lado = lados[i];
     if(lado.classList.contains("tarjeta--reverso")){

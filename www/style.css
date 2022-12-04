@@ -148,11 +148,14 @@ body {
   /* Color para diferenciar delante y detrás*/
   background-color: aqua;
 } 
-/*
+
 .tarjeta--volteo .tarjeta--anverso {
+  transition: all 0.3s linear;
+  transform: rotateY(180deg);
 }
-*/
+
 .tarjeta--volteo .tarjeta--reverso {
+  transition: all 0.3s linear;
   transform: rotateY(180deg);
 } 
  
@@ -173,6 +176,7 @@ body {
 
 .desplazamiento {
   cursor: pointer;
+  -webkit-animation-delay: 1s;
 }
 /*
 .referencia {
