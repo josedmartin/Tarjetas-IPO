@@ -5,7 +5,7 @@
 // El nombre será mostrada en el elemento HTML #equipo de la página web
 // Cada equipo debe actualizar la constante con su nombre de equipo
 
-const nombreDelEquipoDeLaboratorio = "XXXXX";
+const nombreDelEquipoDeLaboratorio = "SUECIA";
 document.getElementById("equipo").textContent = nombreDelEquipoDeLaboratorio;
 
 // ---------------------------------------------------------------------------------
@@ -200,6 +200,19 @@ function ___muestraTarjetaAnterior() {
   //    - la activa se desplaza a la derecha
   //    - y la anterior a la activa se convierte en visible (activa)
   // También debe actualizarse el panel de navegación y las variable numeroDeTarjetaActiva
+
+  if(numeroDeTarjetaActiva >= 1){
+    let tarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
+    numeroDeTarjetaActiva = numeroDeTarjetaActiva - 1;
+    let nuevaTarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
+    tarjetaActiva.classList.remove("tarjeta--activa");
+    tarjetaActiva.classList.add("tarjeta--derecha");
+    nuevaTarjetaActiva.classList.add("tarjeta--activa");
+    nuevaTarjetaActiva.classList.remove("tarjeta--izquierda");
+    console.log(numeroDeTarjetaActiva)
+  }
+  actualizaPanelDeNavegacion()
+
 }
 
 function ___muestraTarjetaSiguiente() {
@@ -209,10 +222,38 @@ function ___muestraTarjetaSiguiente() {
   //   -  la activa se desplace a la izquierda
   //   -  la siguiente a la activa se convierte en visible (activa)
   // También debe actualizarse el panel de navegación y las variable numeroDeTarjetaActiva
+
+  if(numeroDeTarjetaActiva + 1 < numeroDeTarjetasDelMazo){
+    let tarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
+    numeroDeTarjetaActiva = numeroDeTarjetaActiva + 1;
+    let nuevaTarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
+    tarjetaActiva.classList.remove("tarjeta--activa");
+    tarjetaActiva.classList.add("tarjeta--izquierda");
+    nuevaTarjetaActiva.classList.add("tarjeta--activa");
+    nuevaTarjetaActiva.classList.remove("tarjeta--derecha");
+    console.log(numeroDeTarjetaActiva)
+  }
+  actualizaPanelDeNavegacion()
+
 }
 
 function ___volteaTarjeta() {
   // Cambia el estilo de la tarjeta activa para darle la vuelta
+  let tarjetaActiva = document.getElementById(numeroDeTarjetaActiva)
+  var lados = tarjetaActiva.children;
+  for (var i = 0; i < lados.length; i++) {
+    var lado = lados[i];
+    if(lado.classList.contains("tarjeta--reverso")){
+      lado.classList.remove("tarjeta--reverso")
+      lado.classList.add("token")
+      tarjetaActiva.classList.add("tarjeta--volteo");
+
+    }else if(lado.classList.contains("token")){
+      lado.classList.remove("token")
+      lado.classList.add("tarjeta--reverso")
+      tarjetaActiva.classList.remove("tarjeta--volteo");
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------------
