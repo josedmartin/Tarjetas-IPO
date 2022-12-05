@@ -238,7 +238,6 @@ function ___muestraTarjetaSiguiente() {
     selector = `[data-index="${numeroDeTarjetaActiva}"]`;
     tarjetaActiva = document.querySelector(selector);
     tarjetaActiva.classList = claseTarjetaActiva;
-    claseTarjetaActiva.style.cssText = "trasnform: traslate(200px, 150px) rotate(20deg);";
   }
   actualizaPanelDeNavegacion()
 
