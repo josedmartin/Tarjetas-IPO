@@ -152,7 +152,6 @@ body {
   font-size: xx-large;
   width: 350px;
   height: 200px;
-  
 } 
 
 
@@ -164,39 +163,33 @@ body {
   display:none;
 } 
 
-
 /**********************************************************************/
 
 /* Las clases --anverso y --reverso modelan los lados de la tarjeta */
 
-
-
 .tarjeta--anverso {
   position: absolute;
-  backface-visibility: hidden;
-  /* Para ver la cara trasera tras girar*/
-  transform-style: preserve-3d;
-  
+  display: block;
+  backface-visibility: visible;
 }
 
 .tarjeta--reverso {
   position: absolute;
-  /* Para que solo se vea la cara de delante*/
+  display: none;
   backface-visibility: hidden;
-  transform-style: preserve-3d;
-  transform: rotateY(180deg);
-  /* Color para diferenciar delante y detrás*/
-  background-color: aqua;
 } 
 
 .tarjeta--volteo .tarjeta--anverso {
-  transform: rotateY(180deg);
+  position: absolute;
+  display: none;
+  backface-visibility: hidden;
 }
 
 .tarjeta--volteo .tarjeta--reverso {
-  transform: rotateY(180deg);
+  position: absolute;
+  display: block;
+  backface-visibility: visible;
 } 
- 
 
 
 /**********************************************************************/
@@ -218,14 +211,6 @@ body {
   width: 30px;
   height: 30px;
 }
-<<<<<<< HEAD
-=======
-
-.referencia {
-  font-size: x-large;
-}
-
->>>>>>> 2bcbd872850ac00ded06c54201bac5e9881026fc
 
 .referencia {
   font-size: x-large;

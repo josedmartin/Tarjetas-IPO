@@ -238,6 +238,7 @@ function ___muestraTarjetaSiguiente() {
     selector = `[data-index="${numeroDeTarjetaActiva}"]`;
     tarjetaActiva = document.querySelector(selector);
     tarjetaActiva.classList = claseTarjetaActiva;
+    claseTarjetaActiva.style.cssText = "trasnform: traslate(200px, 150px) rotate(20deg);";
   }
   actualizaPanelDeNavegacion()
 
@@ -246,23 +247,14 @@ function ___muestraTarjetaSiguiente() {
 function ___volteaTarjeta() {
 
   // Cambia el estilo de la tarjeta activa para darle la vuelta
-
   var selector = `[data-index="${numeroDeTarjetaActiva}"]`;
   var tarjetaActiva = document.querySelector(selector);
-  let lados = tarjetaActiva.children;
-  
-  let anverso = lados[0];
-  let reverso = lados[1];
   
   if(!tarjetaActiva.classList.contains(claseParaVoltearUnaTarjeta)){
     tarjetaActiva.classList.add(claseParaVoltearUnaTarjeta);
-    anverso.style.cssText = "backface-visibility: hidden";
-    reverso.style.cssText = "backface-visibility: visible";
 
   }else if(tarjetaActiva.classList.contains(claseParaVoltearUnaTarjeta)){
     tarjetaActiva.classList.remove(claseParaVoltearUnaTarjeta);
-    anverso.style.cssText = "backface-visibility: visible";
-    reverso.style.cssText = "backface-visibility: hidden";
   }
 }
 
